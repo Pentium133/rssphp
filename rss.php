@@ -24,7 +24,7 @@ class rss_php {
 	# load RSS by URL
 		public function load($url=false, $unblock=true) {
 			if($url) {
-				$this->http_request($url);
+				$this->loadParser($this->http_request($url));
 			}
 		}
 	# load raw RSS data
