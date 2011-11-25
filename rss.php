@@ -24,11 +24,7 @@ class rss_php {
 	# load RSS by URL
 		public function load($url=false, $unblock=true) {
 			if($url) {
-				if($unblock) {
-					$this->loadParser(file_get_contents($url, false, $this->randomContext()));
-				} else {
-					$this->loadParser(file_get_contents($url));
-				}
+				$this->http_request($url)
 			}
 		}
 	# load raw RSS data
@@ -68,6 +64,16 @@ class rss_php {
 /****************************
 	internal methods
 ***/
+
+    	private function http_request($url)
+    	{
+	        $curl_handler = curl_init($url);
+	        curl_setopt($curl_handler, CURLOPT_RETURNTRANSFER, 1);
+	        $response = curl_exec($curl_handler);
+	        curl_close($curl_handler);
+	        return $response;
+    	}
+    
 	private function loadParser($rss=false) {
 		if($rss) {
 			$this->document = array();
